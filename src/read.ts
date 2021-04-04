@@ -6,12 +6,20 @@ const input = document.querySelector('input')        // get file name
 
 const textarea = document.querySelector('textarea')  // textarea to display file content
 
- let qac: {q: string, a: string, c: number}[] = [{a: "x", q: "y", c: 0}]     // array with answers, questions and the counter
+let qac: {q: string, a: string, c: number}[] = [{a: "x", q: "y", c: 0}]     // array with answers, questions and the counter
 
 // This event listener has been implemented to identify a
 // Change in the input section of the HTML code
 // It will be triggered when a file is chosen.
-input!.addEventListener('change', (e) => {
+input!.addEventListener('change', doit) 
+
+// doit steers all the processing
+//  reading the input,
+//  doing the training and
+//  writing back the status of the training
+//
+
+function doit(e: Event) {
   console.info("const input =")
   console.info(input)
   
@@ -21,6 +29,11 @@ input!.addEventListener('change', (e) => {
   const files = input!.files
 
   if (files) {
+
+    // read file
+    // training
+    // write file
+
     /* If any further modifications have to be made on the
        extracted text. The text can be accessed using the
        file variable. But since this is const, it is a read
@@ -42,7 +55,11 @@ input!.addEventListener('change', (e) => {
       // This is a regular expression to identify carriage
       // returns and line breaks
       const lines = (<string>file!).split(/\r\n|\n/)
-      textarea!.value = lines!.join('\n')
+
+      // Write file content to the textarea
+      console.log('Write file content to text area')
+//      textarea!.value = lines!.join('\n')
+      textarea!.value = 'Default text area text'
 
       // retrieve answers and questions array from file
       const obj = JSON.parse(<string>file)
@@ -68,12 +85,23 @@ input!.addEventListener('change', (e) => {
         }
       }
 
-      alert(qac[2].q + '\n' +
-            qac[2].a + '\n' +
-            qac[2].c)
+      // Write to body our shiny qac
+      document.body.innerHTML = document.body.innerHTML + 'some text'
+
     }
 
     reader.onerror = (e) => alert(e!.target!.error!.name)
 
   }
+}
+
+// var myJSON = JSON.stringify(arr);
+
+alert('Trainer is working!')
+
+input!.addEventListener('change', (e) => {
+  console.log("Here we are")
+//  alert(qac[2].q + '\n' +
+//        qac[2].a + '\n' +
+//        qac[2].c)
 })
