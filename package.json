@@ -2,9 +2,10 @@
   "name": "ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "trainer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/tsc && ./node_modules/.bin/browserify -o ./dist/trainer.js ./dist/Trainer.js"
   },
   "author": "Rudolf Starosta",
   "license": "ISC",
@@ -18,5 +19,9 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "npm": "^7.10.0"
   }
 }

@@ -4,8 +4,8 @@
     "target": "es2015",
     "module": "commonjs",
     "outDir": "dist",
-    "strict": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "strict": true
   },
   "include": [
     "src"
