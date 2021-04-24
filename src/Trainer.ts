@@ -16,10 +16,15 @@ export type Qac = typeof qac
 let actualQuestion: number = 0                                              // points to the actually processed question
 const input = document.querySelector('input')                               // get file name
 
+// Make sure user does not simply close the window
+window.onbeforeunload = () => {return 0}
+
 // Window elements
+let btnCtlg = document.createElement('button')                              // create a <button> element to edit the question and answer catalog
+let btnDwld = document.createElement('button')                              // create a <button> element to download the actual question and answer catalog
 let btnCtrl = document.createElement('button')                              // create a <button> element to control process
-let btnCtlg = document.createElement('button')                              // create a <button> element to edit the answer and question catalog
 let btnOK   = document.createElement('button')                              // create a <button> element in case answer was correct
+let anchor  = document.createElement('a')                                   // create a <a> element to download the actual status
 let txa     = document.createElement('textarea')                            // creat a <textarea> element
 
 // Arrange the buttons
@@ -28,11 +33,18 @@ btnCtrl.style.height          = '40px'
 btnCtrl.style.width           = '150px'
 
 btnCtlg.style.backgroundColor = 'lightblue'
-btnCtlg.style.display         = 'block'
+btnCtlg.style.display         = 'inline'
 btnCtlg.style.height          = '40px'
 btnCtlg.style.width           = '150px'
 btnCtlg.innerHTML             = 'Edit catalog'
 btnCtlg.onclick = (e) => editCatalog(qac)
+
+btnDwld.style.backgroundColor = 'lightblue'
+btnDwld.style.display         = 'none'
+btnDwld.style.height          = '40px'
+btnDwld.style.width           = '150px'
+btnDwld.innerHTML             = 'Save Status'
+btnDwld.onclick               = downloadStatus
 
 btnOK.style.backgroundColor = 'lightgreen'
 btnOK.style.display         = 'none'
@@ -41,10 +53,15 @@ btnOK.style.width           = '150px'
 btnOK.innerHTML             = 'Knew it :)'
 btnOK.onclick               = () => {}
 
+// Arrange the anchor
+anchor.download = 'file'
+
+
 // Arrange the text area
+txa.style.display   = 'block'
+txa.style.fontSize  = '12pt'
 txa.cols            = 132
 txa.rows            = 5
-txa.style.fontSize  = '12pt'
 
 // Connect Ctrl-Button to file-input-field
 btnCtrl.innerHTML     = 'Get questions'
@@ -53,6 +70,7 @@ btnCtrl.style.display = 'block'
 
 // Arrange document
 document.body.appendChild(btnCtlg)
+document.body.appendChild(btnDwld)
 document.body.appendChild(txa)
 document.body.appendChild(btnCtrl)
 document.body.appendChild(btnOK)
@@ -90,11 +108,12 @@ async function readQuestionsAndAnswers() {
   console.log(fileContent)
   qac = JSON.parse(<string> fileContent)
   qac.sort((a,b) => {return(a.c - b.c)})
+  // Switch on the download button
+  btnDwld.style.display = 'inline'
 }
 
 function doTraining(){
   console.log('doTraining()')
-  writeResult()                              // initialize BLOB for download   
   showQuestion()                             // Show first question
 }
 
@@ -145,7 +164,6 @@ function incrementCounter() {
   qac[actualQuestion].c++
   actualQuestion++
   showQuestion()
-  writeResult()
 }
 
 function startNewRun() {
@@ -155,18 +173,16 @@ function startNewRun() {
   showQuestion()     // show first question
 }
 
-function writeResult() {
-  console.log('writeResult()')
-
-  // Provide qac for download
+function downloadStatus() {
+  console.log('downloadStatus()')
   let resultJSON = JSON.stringify(qac);
-  let link: HTMLAnchorElement = <HTMLAnchorElement> document.getElementById('downloadlink')
   let data = new Blob([resultJSON], {type: 'application/json'})
   // revoke previously created link to prevent from memory leakage 
-  if (link.href !== null) {
-    window.URL.revokeObjectURL(link.href)
+  if (anchor.href !== null) {
+    console.log('revoking previously created URL')
+    window.URL.revokeObjectURL(anchor.href)
   }
-  // make a new link to the new Blob
-  link.href = window.URL.createObjectURL(data)
-  console.log(link.href)
+  anchor.href = window.URL.createObjectURL(data)
+  console.log(anchor.href)
+  anchor.click()
 }

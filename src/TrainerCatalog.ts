@@ -8,8 +8,6 @@ let modDiv      = document.createElement('div')                  // create a <di
 let modDivCont  = document.createElement('div')                  // content of the modal <div>
 let modDivCls   = document.createElement('span')                 // close button of the modal <div>
 let modDivPar   = document.createElement('p')                    // <p> to hold the content
-let qacTable    = document.createElement('table')                // <table> to show the questions and answers
-let qacTblBody  = document.createElement('tbody')                // table body corresponding to qacTable
 
 // Arrange the modal div area
 modDiv.style.display         = 'none'
@@ -41,10 +39,9 @@ modDivCls.onmouseenter     = () => {modDivCls.style.color = '#000';
                                     modDivCls.style.cursor = 'pointer'
                                    }
 modDivCls.onmouseleave     = () => {modDivCls.style.color = '#aaa'}
-modDivCls.onclick          = () => {modDiv.style.display = 'none'}
+modDivCls.onclick          = () => {if (modDivPar.lastChild) modDivPar.removeChild(modDivPar.lastChild);
+                                    modDiv.style.display = 'none'}
 
-qacTable.appendChild(qacTblBody)
-modDivPar.appendChild(qacTable)
 modDivCont.appendChild(modDivCls)
 modDivCont.appendChild(modDivPar)
 modDiv.appendChild(modDivCont)
@@ -53,9 +50,16 @@ document.body.appendChild(modDiv)
 
 export function editCatalog(qac: Qac) {
   console.log('editCatalog()')
+
+  let qacTable    = document.createElement('table')                // <table> to show the questions and answers
+  let qacTblBody  = document.createElement('tbody')                // table body corresponding to qacTable
+
+  qacTable.appendChild(qacTblBody)
+  modDivPar.appendChild(qacTable)
+
   // The Table itself showing the qac array
   qacTable.border = '1'   // borderise the table
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < qac.length; i++) {
     let tr       = document.createElement('tr')              // row
     let tdq      = document.createElement('td')              // question cell
     let iQ       = document.createElement('textarea')        // input question
