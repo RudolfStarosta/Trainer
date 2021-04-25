@@ -8,60 +8,49 @@
  *
  */
 
-import { editCatalog } from './TrainerCatalog'                              // editing the question catalog is handled here
+import { editCatalog } from './TrainerCatalog'                            // editing the question catalog is handled here
 
-let qac: {q: string, a: string, c: number}[] = [{a: "x", q: "y", c: 0}]     // array with answers, questions and the counter
+let qac: {q: string, a: string, c: number}[] = [{a: "x", q: "y", c: 0}]   // array with answers, questions and the counter
 export type Qac = typeof qac
 
-let actualQuestion: number = 0                                              // points to the actually processed question
-const input = document.querySelector('input')                               // get file name
+let actualQuestion: number = 0                                            // points to the actually processed question
+const input = document.querySelector('input')                             // get file name
 
 // Make sure user does not simply close the window
 window.onbeforeunload = () => {return 0}
 
 // Window elements
-let btnCtlg = document.createElement('button')                              // create a <button> element to edit the question and answer catalog
-let btnDwld = document.createElement('button')                              // create a <button> element to download the actual question and answer catalog
-let btnCtrl = document.createElement('button')                              // create a <button> element to control process
-let btnOK   = document.createElement('button')                              // create a <button> element in case answer was correct
-let anchor  = document.createElement('a')                                   // create a <a> element to download the actual status
-let txa     = document.createElement('textarea')                            // creat a <textarea> element
+let btnCtlg = document.createElement('button')                            // create a <button> element to edit the question and answer catalog
+let btnDwld = document.createElement('button')                            // create a <button> element to download the actual question and answer catalog
+let btnCtrl = document.createElement('button')                            // create a <button> element to control process
+let btnOK   = document.createElement('button')                            // create a <button> element in case answer was correct
+let anchor  = document.createElement('a')                                 // create a <a> element to download the actual status
+let txa     = document.createElement('textarea')                          // creat a <textarea> element
 
 // Arrange the buttons
 btnCtrl.style.backgroundColor = 'lightgrey'
-btnCtrl.style.height          = '40px'
-btnCtrl.style.width           = '150px'
 
-btnCtlg.style.backgroundColor = 'lightblue'
 btnCtlg.style.display         = 'inline'
-btnCtlg.style.height          = '40px'
-btnCtlg.style.width           = '150px'
 btnCtlg.innerHTML             = 'Edit catalog'
 btnCtlg.onclick = (e) => editCatalog(qac)
 
-btnDwld.style.backgroundColor = 'lightblue'
 btnDwld.style.display         = 'none'
-btnDwld.style.height          = '40px'
-btnDwld.style.width           = '150px'
 btnDwld.innerHTML             = 'Save Status'
 btnDwld.onclick               = downloadStatus
 
-btnOK.style.backgroundColor = 'lightgreen'
-btnOK.style.display         = 'none'
-btnOK.style.height          = '40px'
-btnOK.style.width           = '150px'
-btnOK.innerHTML             = 'Knew it :)'
-btnOK.onclick               = () => {}
+btnOK.style.backgroundColor   = 'lightgreen'
+btnOK.style.display           = 'none'
+btnOK.innerHTML               = 'Knew it :)'
+btnOK.onclick                 = () => {}
 
 // Arrange the anchor
 anchor.download = 'file'
 
-
 // Arrange the text area
 txa.style.display   = 'block'
-txa.style.fontSize  = '12pt'
-txa.cols            = 132
+txa.cols            = 120
 txa.rows            = 5
+txa.readOnly        = true
 
 // Connect Ctrl-Button to file-input-field
 btnCtrl.innerHTML     = 'Get questions'
@@ -84,7 +73,6 @@ input!.addEventListener('change', doit)
 // doit() steers all the processing
 // reading the input,
 // doing the training and
-// writing back the status of the training
 
 function doit(eD: Event) {
   readQuestionsAndAnswers().
@@ -175,9 +163,11 @@ function startNewRun() {
 
 function downloadStatus() {
   console.log('downloadStatus()')
+
+  // write the array with questions and answers to an downloadable blob
   let resultJSON = JSON.stringify(qac);
   let data = new Blob([resultJSON], {type: 'application/json'})
-  // revoke previously created link to prevent from memory leakage 
+  // revoke previously created anchor.href to prevent from memory leakage 
   if (anchor.href !== null) {
     console.log('revoking previously created URL')
     window.URL.revokeObjectURL(anchor.href)

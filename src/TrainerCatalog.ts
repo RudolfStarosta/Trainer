@@ -11,7 +11,7 @@ let modDivPar   = document.createElement('p')                    // <p> to hold 
 
 // Arrange the modal div area
 modDiv.style.display         = 'none'
-modDiv.style.backgroundColor = 'rgba(0,0,0,0.4)'
+modDiv.style.backgroundColor = 'rgba(0,0,0,0.5)'     // background black with opacity 0.4
 modDiv.style.position        = 'absolute'
 modDiv.style.top             = '0px'
 modDiv.style.left            = '0px'
@@ -24,7 +24,9 @@ modDivCont.style.backgroundColor = '#fefefe'
 modDivCont.style.margin          = '7% auto'
 modDivCont.style.border          = '1px solid #888'
 modDivCont.style.padding         = '17px'
-modDivCont.style.width           = '80%'
+modDivCont.style.width           = '83%'
+modDivCont.style.height          = '75%'
+modDivCont.style.overflowY       = 'scroll'
 
 // The paragraph
 modDivPar.innerHTML              = '<h3>Question and Answer Catalog</h3>'
@@ -51,44 +53,61 @@ document.body.appendChild(modDiv)
 export function editCatalog(qac: Qac) {
   console.log('editCatalog()')
 
-  let qacTable    = document.createElement('table')                // <table> to show the questions and answers
-  let qacTblBody  = document.createElement('tbody')                // table body corresponding to qacTable
+  let qacTable    = document.createElement('table')         // <table> to show the questions and answers
+  let qacTblBody  = document.createElement('tbody')         // table body corresponding to qacTable
 
   qacTable.appendChild(qacTblBody)
   modDivPar.appendChild(qacTable)
+  let tr      = document.createElement('tr')                // header row
+  let thq     = document.createElement('th')                // header question
+  thq.appendChild(document.createTextNode('Question'))
+  let tha     = document.createElement('th')                // header answer
+  tha.appendChild(document.createTextNode('Answer'))
+  let thc     = document.createElement('th')                // header counter
+  thc.appendChild(document.createTextNode('Cnt'))
+  tr.appendChild(thq)
+  tr.appendChild(tha)
+  tr.appendChild(thc)
+  qacTblBody.appendChild(tr)
 
   // The Table itself showing the qac array
-  qacTable.border = '1'   // borderise the table
   for (let i = 0; i < qac.length; i++) {
-    let tr       = document.createElement('tr')              // row
-    let tdq      = document.createElement('td')              // question cell
-    let iQ       = document.createElement('textarea')        // input question
-    let tda      = document.createElement('td')              // answer cell
-    let tdc      = document.createElement('td')              // counter cell
-    let tde      = document.createElement('td')              // edit cell
-    let btnEdt   = document.createElement('button')          // create "Edit" button
+    let tr      = document.createElement('tr')              // row
+    let tdq     = document.createElement('td')              // question cell
+    let iQ      = document.createElement('textarea')        // input question
+    let tda     = document.createElement('td')              // answer cell
+    let iA      = document.createElement('textarea')        // input answer
+    let tdc     = document.createElement('td')              // counter cell
+    let iC      = document.createElement('textarea')        // input counter
+    let tde     = document.createElement('td')              // edit cell
+    let btnEdt  = document.createElement('button')          // create "Edit" button
 
     qacTblBody.appendChild(tr)
 
     // Question cell
-    iQ.cols = 53
     iQ.readOnly = true
-    iQ.style.resize = 'none'
     iQ.value = qac[i].q
-    tdq.width = '45%'
+    tdq.width = '46%'
     tdq.appendChild(iQ)
     tr.appendChild(tdq)
 
-    tda.width = '45%'
-    tda.appendChild(document.createTextNode(qac[i].a))
+    // Answer cell
+    iA.readOnly = true
+    iA.value = qac[i].a
+    tda.width = '46%'
+    tda.appendChild(iA)
     tr.appendChild(tda)
 
+    // Counter cell
+    iC.readOnly = true
+    iC.value = qac[i].c.toString()
     tdc.width = '4%'
-    tdc.appendChild(document.createTextNode(qac[i].c.toString()))
+    tdc.appendChild(iC)
     tr.appendChild(tdc)
 
-    btnEdt.innerHTML = 'Edit'
-    tde.width = '6%'
+    btnEdt.innerHTML    = 'Edit'
+    btnEdt.style.width  = '85px'
+    tde.width = '4%'
     tde.style.textAlign = 'center'
     tde.style.verticalAlign = 'center'
     tde.appendChild(btnEdt)
@@ -96,6 +115,6 @@ export function editCatalog(qac: Qac) {
 
   }
 
-  modDiv.style.display = 'block'
+  modDiv.style.display = 'block'  // make the modal <div> visible
 }
 
