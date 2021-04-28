@@ -17,14 +17,13 @@ let actualQuestion: number = 0                                            // poi
 const input = document.querySelector('input')                             // get file name
 
 // Make sure user does not simply close the window
-window.onbeforeunload = () => {return 0}
+window.onbeforeunload = () => {return '-' }                               // Warn user, the text (-) is not used
 
 // Window elements
 let btnCtlg = document.createElement('button')                            // create a <button> element to edit the question and answer catalog
 let btnDwld = document.createElement('button')                            // create a <button> element to download the actual question and answer catalog
 let btnCtrl = document.createElement('button')                            // create a <button> element to control process
 let btnOK   = document.createElement('button')                            // create a <button> element in case answer was correct
-let anchor  = document.createElement('a')                                 // create a <a> element to download the actual status
 let txa     = document.createElement('textarea')                          // creat a <textarea> element
 
 // Arrange the buttons
@@ -43,13 +42,10 @@ btnOK.style.display           = 'none'
 btnOK.innerHTML               = 'Knew it :)'
 btnOK.onclick                 = () => {}
 
-// Arrange the anchor
-anchor.download = 'file'
-
 // Arrange the text area
 txa.style.display   = 'block'
 txa.cols            = 120
-txa.rows            = 5
+txa.rows            = 7
 txa.readOnly        = true
 
 // Connect Ctrl-Button to file-input-field
@@ -113,10 +109,10 @@ function showQuestion() {
     btnCtrl.onclick = showAnswer
     btnCtrl.focus()                        // Default to control button
 
-    txa.innerHTML = txa.innerHTML + '\n-> ' + 
+    txa.innerHTML = txa.innerHTML + '-> ' + 
                     (actualQuestion + 1)    +
                     '. | ' + qac[actualQuestion].c + ' times known <-\n'
-    txa.innerHTML = txa.innerHTML + 'Q: ' + qac[actualQuestion].q + ' '
+    txa.innerHTML = txa.innerHTML + 'Q: ' + qac[actualQuestion].q + '\n'
     txa.scrollTop = txa.scrollHeight       // Stay at the bottom of the text area 
   }
   else
@@ -138,7 +134,7 @@ function showAnswer() {
     btnOK.onclick = incrementCounter 
     btnOK.style.display = 'inline'
 
-    txa.innerHTML = txa.innerHTML + '\nA: ' + qac[actualQuestion].a
+    txa.innerHTML = txa.innerHTML + 'A: ' + qac[actualQuestion].a + '\n\n'
     txa.scrollTop = txa.scrollHeight       // Stay at the bottom of the text area 
   }
   else
@@ -163,7 +159,9 @@ function startNewRun() {
 
 function downloadStatus() {
   console.log('downloadStatus()')
-
+  // create a <a> element to download the actual status
+  let anchor  = document.createElement('a')
+  anchor.download = 'trainer.json'
   // write the array with questions and answers to an downloadable blob
   let resultJSON = JSON.stringify(qac);
   let data = new Blob([resultJSON], {type: 'application/json'})

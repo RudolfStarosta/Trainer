@@ -87,27 +87,30 @@ export function editCatalog(qac: Qac) {
     // Question cell
     iQ.readOnly = true
     iQ.value = qac[i].q
-    tdq.width = '46%'
+    tdq.style.width = '46%'
     tdq.appendChild(iQ)
     tr.appendChild(tdq)
 
     // Answer cell
     iA.readOnly = true
     iA.value = qac[i].a
-    tda.width = '46%'
+    tda.style.width = '46%'
     tda.appendChild(iA)
     tr.appendChild(tda)
 
     // Counter cell
     iC.readOnly = true
     iC.value = qac[i].c.toString()
-    tdc.width = '4%'
+    tdc.style.width = '4%'
     tdc.appendChild(iC)
     tr.appendChild(tdc)
 
-    btnEdt.innerHTML    = 'Edit'
-    btnEdt.style.width  = '85px'
-    tde.width = '4%'
+    // Edit cell
+    btnEdt.innerHTML = 'Edit'
+    btnEdt.style.width = '75px'
+    btnEdt.onclick = () => editRow(i)
+    tde.style.width = '4%'
+    tde.style.padding = '5px'
     tde.style.textAlign = 'center'
     tde.style.verticalAlign = 'center'
     tde.appendChild(btnEdt)
@@ -118,3 +121,60 @@ export function editCatalog(qac: Qac) {
   modDiv.style.display = 'block'  // make the modal <div> visible
 }
 
+function editRow(i: number) {
+  console.log('editRow()')
+
+  let tbody = document.getElementsByTagName('tbody')
+  let row   = document.getElementsByTagName('tr')[i + 1] // + 1 take into account the header row
+  let cell  = row.firstChild
+
+  // Question
+  let textarea = <HTMLInputElement>cell!.firstChild
+  textarea.readOnly = false
+
+  // Answer
+  cell     = cell!.nextSibling
+  textarea = <HTMLInputElement>cell!.firstChild
+  textarea.readOnly = false
+
+  // Count 
+  cell     = cell!.nextSibling
+  textarea = <HTMLInputElement>cell!.firstChild
+  textarea.readOnly = false
+
+  // Button
+  cell       = cell!.nextSibling
+  let button = <HTMLInputElement>cell!.firstChild
+  button.innerHTML = 'Save'
+  button.onclick = () => saveRow(i)
+
+}
+
+function saveRow(i: number) {
+  console.log('saveRow()')
+
+  let tbody = document.getElementsByTagName('tbody')
+  let row   = document.getElementsByTagName('tr')[i + 1] // + 1 take into account the header row
+  let cell  = row.firstChild
+
+  // Question
+  let textarea = <HTMLInputElement>cell!.firstChild
+  textarea.readOnly = true
+
+  // Answer
+  cell     = cell!.nextSibling
+  textarea = <HTMLInputElement>cell!.firstChild
+  textarea.readOnly = true
+
+  // Count 
+  cell     = cell!.nextSibling
+  textarea = <HTMLInputElement>cell!.firstChild
+  textarea.readOnly = true
+
+  // Button
+  cell       = cell!.nextSibling
+  let button = <HTMLInputElement>cell!.firstChild
+  button.innerHTML = 'Edit'
+  button.onclick = () => editRow(i)
+
+}
