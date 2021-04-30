@@ -160,6 +160,8 @@ function saveRow(i: number) {
   // Question
   let textarea = <HTMLInputElement>cell!.firstChild
   textarea.readOnly = true
+  console.log(textarea.value)
+  qac[i].q = textarea.value
 
   // Answer
   cell     = cell!.nextSibling
