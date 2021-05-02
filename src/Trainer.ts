@@ -31,7 +31,7 @@ btnCtrl.style.backgroundColor = 'lightgrey'
 
 btnCtlg.style.display         = 'inline'
 btnCtlg.innerHTML             = 'Edit catalog'
-btnCtlg.onclick = (e) => editCatalog(qac)
+btnCtlg.onclick = (e) => qac = editCatalog(qac)
 
 btnDwld.style.display         = 'none'
 btnDwld.innerHTML             = 'Save Status'
@@ -59,6 +59,7 @@ document.body.appendChild(btnDwld)
 document.body.appendChild(txa)
 document.body.appendChild(btnCtrl)
 document.body.appendChild(btnOK)
+btnCtrl.focus()                        // Default to control button
 
 // This event listener has been implemented to identify a
 // change in the input section of the HTML code.

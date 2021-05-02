@@ -4,10 +4,11 @@
 
 import { Qac } from './Trainer'
 
-let modDiv      = document.createElement('div')                  // create a <div> element used to edit the catalog
-let modDivCont  = document.createElement('div')                  // content of the modal <div>
-let modDivCls   = document.createElement('span')                 // close button of the modal <div>
-let modDivPar   = document.createElement('p')                    // <p> to hold the content
+let lclQac : Qac                                     // local copy of questions and answers
+let modDiv      = document.createElement('div')      // create a <div> element used to edit the catalog
+let modDivCont  = document.createElement('div')      // content of the modal <div>
+let modDivCls   = document.createElement('span')     // close button of the modal <div>
+let modDivPar   = document.createElement('p')        // <p> to hold the content
 
 // Arrange the modal div area
 modDiv.style.display         = 'none'
@@ -50,12 +51,13 @@ modDiv.appendChild(modDivCont)
 
 document.body.appendChild(modDiv)
 
-export function editCatalog(qac: Qac) {
+export function editCatalog(qac: Qac) : Qac {
   console.log('editCatalog()')
 
   let qacTable    = document.createElement('table')         // <table> to show the questions and answers
   let qacTblBody  = document.createElement('tbody')         // table body corresponding to qacTable
 
+  lclQac = qac                                              // get the local copy of qac
   qacTable.appendChild(qacTblBody)
   modDivPar.appendChild(qacTable)
   let tr      = document.createElement('tr')                // header row
@@ -119,6 +121,8 @@ export function editCatalog(qac: Qac) {
   }
 
   modDiv.style.display = 'block'  // make the modal <div> visible
+
+  return lclQac                   // return the local copy of qac
 }
 
 function editRow(i: number) {
@@ -161,17 +165,19 @@ function saveRow(i: number) {
   let textarea = <HTMLInputElement>cell!.firstChild
   textarea.readOnly = true
   console.log(textarea.value)
-  qac[i].q = textarea.value
+  lclQac[i].q = textarea.value
 
   // Answer
   cell     = cell!.nextSibling
   textarea = <HTMLInputElement>cell!.firstChild
   textarea.readOnly = true
+  lclQac[i].a = textarea.value
 
   // Count 
   cell     = cell!.nextSibling
   textarea = <HTMLInputElement>cell!.firstChild
   textarea.readOnly = true
+  lclQac[i].c = parseInt(textarea.value, 10)
 
   // Button
   cell       = cell!.nextSibling
