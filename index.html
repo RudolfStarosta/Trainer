@@ -1,0 +1,56 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+
+  <title>Trainer</title> 
+
+  <meta charset="utf-8"> 
+
+  <style>
+    button {
+      background-color: lightblue;
+      height: 42px;
+      width: 155px; 
+    }
+    textarea {
+      border-style: solid;
+      border-width: 1px:
+      font-size: 12pt; 
+      resize: none;
+      width: 100%;
+    }
+    table {
+      border-spacing: 0px;
+    }
+    tr:first-child td {
+      font-size: 13pt; 
+      background-color: lightblue;
+      padding: 12px;
+      position: sticky;
+      top: 0;
+    }
+  </style>
+
+</head> 
+  
+<body> 
+  <center> 
+    <h1> 
+      Trainer 
+    </h1> 
+  </center> 
+  <p>
+    <h2>
+      How it is done
+    </h2>
+    1. Get questions and answers from file trainer.json .                          <br>
+    2. Do the training. Step through the questions by hitting the <Enter> key.     <br>
+    3. Save the current status by dowloading the file trainer.json                 <br>
+  </p>
+  <input type="file" id="getFile" accept="application/json" style="display:none"> 
+  <script src="./dist/trainer.js"></script> 
+</body> 
+  
+</html> 
+

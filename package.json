@@ -1,6 +1,6 @@
 {
-  "name": "ts",
-  "version": "1.0.0",
+  "name": "Trainer",
+  "version": "1.0.1",
   "description": "",
   "main": "trainer.js",
   "scripts": {
@@ -8,16 +8,9 @@
     "build": "./node_modules/.bin/tsc && ./node_modules/.bin/browserify -o ./dist/trainer.js ./dist/Trainer.js"
   },
   "author": "Rudolf Starosta",
-  "license": "ISC",
+  "license": "GNU General Public License v3.0",
   "devDependencies": {
     "@types/node": "^14.14.35",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "eslint": "^7.22.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
     "typescript": "^4.2.3"
   },
   "dependencies": {
