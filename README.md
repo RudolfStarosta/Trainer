@@ -19,5 +19,4 @@ The current version of Trainer was programmed and tested under Debian GNU/Linux 
 `$ npm install`
 4. Build Trainer \
 `$ npm run build`
-
-Open file **index.html** in browser and start learning.
+5. Open file **index.html** in browser and start learning.
