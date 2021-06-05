@@ -11,7 +11,7 @@ The current version of Trainer was programmed and tested under Debian GNU/Linux 
 - if changes to the code are required: vi (VIM - Vi IMproved 8.1, any other version or text editor should work as well)
 
 # Installation
-1. Download the repository withi \
+1. Download the repository \
 `$ git clone git@github.com:RudolfStarosta/Trainer.git`
 2. Go to newly created directory \
 `$ cd Trainer`
