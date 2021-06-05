@@ -23,11 +23,9 @@ modDiv.style.zIndex          = '1'                   // top layer
 // Modal content: Table of questions and answers
 modDivCont.style.backgroundColor = '#fefefe'
 modDivCont.style.margin          = '7% auto'
-modDivCont.style.border          = '1px solid #888'
 modDivCont.style.padding         = '17px'
 modDivCont.style.width           = '83%'
 modDivCont.style.height          = '75%'
-modDivCont.style.overflowY       = 'scroll'
 
 // The paragraph
 modDivPar.innerHTML              = '<h3>Question and Answer Catalog</h3>'
@@ -55,22 +53,33 @@ export function editCatalog(qac: Qac) : Qac {
   console.log('editCatalog()')
 
   let qacTable    = document.createElement('table')         // <table> to show the questions and answers
+  let qacTblHead  = document.createElement('thead')         // table head corresponding to qacTable
   let qacTblBody  = document.createElement('tbody')         // table body corresponding to qacTable
 
+  // Arrange Table
+  qacTable.style.height    = window.innerHeight * 0.65 + 'px'
+  qacTable.style.display   = 'block'
+  qacTable.style.overflowY = 'scroll'
+  qacTable.style.border    = '1px solid black'
+
   lclQac = qac                                              // get the local copy of qac
+
+  modDivPar.appendChild(qacTable)                           // table is an element of the paragraph
+//  qacTable.appendChild(qacTblHead)
   qacTable.appendChild(qacTblBody)
-  modDivPar.appendChild(qacTable)
-  let tr      = document.createElement('tr')                // header row
-  let thq     = document.createElement('th')                // header question
-  thq.appendChild(document.createTextNode('Question'))
-  let tha     = document.createElement('th')                // header answer
-  tha.appendChild(document.createTextNode('Answer'))
-  let thc     = document.createElement('th')                // header counter
-  thc.appendChild(document.createTextNode('Cnt'))
-  tr.appendChild(thq)
-  tr.appendChild(tha)
-  tr.appendChild(thc)
-  qacTblBody.appendChild(tr)
+
+  let tr        = qacTblBody.insertRow(0)     // header row
+  let thq       = tr.insertCell(0)            // header question
+  thq.innerHTML = 'Question'
+
+  let tha       = tr.insertCell(1)            // header answer
+  tha.innerHTML = 'Answer'
+  let thc       = tr.insertCell(2)            // header counter
+  thc.innerHTML = 'Cnt'
+  let the       = tr.insertCell(3)            // header edit
+  the.innerHTML = 'Action'
+
+//  qacTblHead.appendChild(tr)
 
   // The Table itself showing the qac array
   for (let i = 0; i < qac.length; i++) {
@@ -150,6 +159,7 @@ function editRow(i: number) {
   cell       = cell!.nextSibling
   let button = <HTMLInputElement>cell!.firstChild
   button.innerHTML = 'Save'
+  button.style.backgroundColor = 'tomato'
   button.onclick = () => saveRow(i)
 
 }
@@ -183,6 +193,7 @@ function saveRow(i: number) {
   cell       = cell!.nextSibling
   let button = <HTMLInputElement>cell!.firstChild
   button.innerHTML = 'Edit'
+  button.style.backgroundColor = 'lightblue'
   button.onclick = () => editRow(i)
 
 }
