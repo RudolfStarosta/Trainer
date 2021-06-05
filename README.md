@@ -18,6 +18,6 @@ The current version of Trainer was programmed and tested under Debian GNU/Linux 
 3. Install required packages \
 `$ npm install`
 4. Build Trainer \
-`$npm run build`
+`$ npm run build`
 
 Open file **index.html** in browser and start learning.
