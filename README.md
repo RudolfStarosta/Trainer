@@ -6,7 +6,7 @@ Simple trainer to memorize pairs of questions and answers
 The current version of Trainer was programmed and tested under Debian GNU/Linux 10 (buster), further required software:
 
 - git (version 2.20.1, any other version should work as well)
-- npm (version 7.11.1), ditto)
+- npm (version 7.11.1, ditto)
 - any browser (Mozilla Firefox 78.11.0esr, any other browser supporting JavaScript should work as well)
 - if changes to the code are required: vi (VIM - Vi IMproved 8.1, any other version or text editor should work as well)
 

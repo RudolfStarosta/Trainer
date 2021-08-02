@@ -37,17 +37,31 @@
 <body> 
   <center> 
     <h1> 
-      Trainer 0.1 
+      Trainer
     </h1> 
   </center> 
   <p>
     <h2>
       How it is done
     </h2>
-    1. Get questions and answers from file ./assets/trainer.json .                                                                       <br>
-    2. Do the training. Step through the questions by hitting the &lt;Enter&gt; key.                                                           <br>
-    3. Save the current status by dowloading the file trainer.json. It may be used as input for step 1. for the next run                 <br>
+    <ol>
+      <li>
+        If you run Trainer the first time see here to learn how to set it up. Elsewise get the
+        questions and answers by importing the JSON file saved at the end of a previous run. You do this
+        by hitting the &lt;Enter&gt; key or clicking the button labeled "Get questions".
+      </li>
+      <li>
+        Do the training. Step through the questions by hitting the &lt;Enter&gt; key or clicking the button
+        labeled "Show answer". If you knew the answer and want to increase the corresponding counter click the button
+        labeled "Knew it :)".
+      </li>
+      <li>
+        Save the current status at the end of a training run by downloading and saving the JSON file by clicking the button labeled "Save status".
+        The file may be used as input for step 1. for the next run. 
+      </li>
+    </ol>
   </p>
+  <p style="text-align:right;">Version 0.2</p>
   <input type="file" id="getFile" accept="application/json" style="display:none"> 
   <script src="./dist/trainer.js"></script> 
 </body> 
